@@ -1,6 +1,7 @@
 "use client";
+import { NAV_ITEMS } from "@/lib/constants";
 import Link from "next/link";
-import NAV_ITEMS from "@/lib/constants";
+
 import { usePathname } from "next/navigation";
 
 const NavItems = () => {
