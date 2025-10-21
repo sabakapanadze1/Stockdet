@@ -11,10 +11,14 @@ import {
 } from "@/lib/constants";
 import { CountrySelectField } from "@/components/forms/CountrySelectField";
 
-import { useRouter } from "next/navigation";
 import FooterLink from "@/components/forms/FooterLink";
+import { signUpWithEmail } from "@/lib/actions/auth.actions";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const SignUp = () => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -35,7 +39,13 @@ const SignUp = () => {
 
   const onSubmit = async (data: SignUpFormData) => {
     try {
-    } catch (e) {}
+      const result = await signUpWithEmail(data);
+      router.push("/");
+    } catch (e: any) {
+      toast.error("Sign up failed", {
+        description: e?.message,
+      });
+    }
   };
 
   return (
@@ -112,6 +122,7 @@ const SignUp = () => {
           error={errors.preferredIndustry}
           required
         />
+        {errors && <p className="text-red-500 text-sm">ჯდდჯჯდჯდსჯა</p>}
 
         <Button
           type="submit"
