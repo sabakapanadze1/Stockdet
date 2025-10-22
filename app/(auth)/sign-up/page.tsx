@@ -40,7 +40,7 @@ const SignUp = () => {
   const onSubmit = async (data: SignUpFormData) => {
     try {
       const result = await signUpWithEmail(data);
-      router.push("/");
+      if (result.success) router.push("/");
     } catch (e: any) {
       toast.error("Sign up failed", {
         description: e?.message,
@@ -122,7 +122,6 @@ const SignUp = () => {
           error={errors.preferredIndustry}
           required
         />
-        {errors && <p className="text-red-500 text-sm">ჯდდჯჯდჯდსჯა</p>}
 
         <Button
           type="submit"
