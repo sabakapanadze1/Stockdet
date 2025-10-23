@@ -32,4 +32,4 @@ export const getAuth = async () => {
     return authInstance;
 }
 
-// Removed top-level auth initialization to prevent build-time MongoDB connection
+export const auth = await getAuth();
