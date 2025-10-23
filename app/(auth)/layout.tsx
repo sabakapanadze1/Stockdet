@@ -1,12 +1,22 @@
 import Link from "next/link";
 import Image from "next/image";
-import { auth } from "@/lib/better-auth/auth";
+export const dynamic = "force-dynamic";
+import { getAuth } from "@/lib/better-auth/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 const Layout = async ({ children }: { children: React.ReactNode }) => {
-  const session = await auth.api.getSession({ headers: await headers() });
-  if (session?.user) redirect("/");
+  try {
+    const auth = await getAuth();
+    const hdrs = await headers();
+    const session = await auth.api.getSession({ headers: hdrs });
+
+    if (session?.user) {
+      redirect("/");
+    }
+  } catch (e) {
+    console.error("getSession failed:", e);
+  }
 
   return (
     <main className="auth-layout">
