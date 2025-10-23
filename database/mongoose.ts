@@ -16,12 +16,19 @@ if(!cached) {
 }
 
 export const connectToDatabase = async () => {
-    if(!MONGODB_URI) throw new Error('MONGODB_URI must be set within .env');
+    if(!MONGODB_URI) {
+        throw new Error('MONGODB_URI must be set within .env');
+    }
 
     if(cached.conn) return cached.conn;
 
     if(!cached.promise) {
-        cached.promise = mongoose.connect(MONGODB_URI, { bufferCommands: false });
+        cached.promise = mongoose.connect(MONGODB_URI, { 
+            bufferCommands: false,
+            maxPoolSize: 10,
+            serverSelectionTimeoutMS: 5000,
+            socketTimeoutMS: 45000,
+        });
     }
 
     try {
@@ -31,7 +38,7 @@ export const connectToDatabase = async () => {
         throw err;
     }
 
-    console.log(`Connected to database ${process.env.NODE_ENV} - ${MONGODB_URI}`);
+    console.log(`Connected to database ${process.env.NODE_ENV}`);
 
     return cached.conn;
 }
