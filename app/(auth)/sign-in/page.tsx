@@ -14,7 +14,6 @@ const SignIn = () => {
   const {
     register,
     handleSubmit,
-    control,
     formState: { errors, isSubmitting },
   } = useForm<SignUpFormData>({
     defaultValues: {
@@ -28,10 +27,10 @@ const SignIn = () => {
     try {
       const result = await signInWithEmail(data);
       if (result.success) router.push("/");
-    } catch (e: any) {
+    } catch (e: unknown) {
       console.log(e);
       toast.error("Sign in failed", {
-        description: e?.message,
+        description: e instanceof Error ? e.message : "An error occurred",
       });
     }
   };
