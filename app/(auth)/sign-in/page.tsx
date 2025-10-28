@@ -67,7 +67,7 @@ const SignIn = () => {
           disabled={isSubmitting}
           className="yellow-btn w-full mt-5"
         >
-          {isSubmitting ? "Signing In" : "Sign I"}
+          {isSubmitting ? "Signing In" : "Sign In"}
         </Button>
         <FooterLink
           text="Dont't have an account?"
